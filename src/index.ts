@@ -1,19 +1,19 @@
-import { ApolloServer } from "apollo-server-koa";
+import { ApolloServer } from 'apollo-server-koa';
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
-} from "apollo-server-core";
-import Koa from "koa";
-import http from "http";
-import { typeDefs } from "./graphql/typeDefs";
-import resolvers from "./graphql/resolvers";
+} from 'apollo-server-core';
+import Koa from 'koa';
+import http from 'http';
+import { typeDefs } from './graphql/typeDefs';
+import resolvers from './graphql/resolvers';
 async function startApolloServer(typeDefs: string, resolvers: any) {
   const httpServer = http.createServer();
   const server = new ApolloServer({
     typeDefs,
     resolvers,
     csrfPrevention: true,
-    cache: "bounded",
+    cache: 'bounded',
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       ApolloServerPluginLandingPageLocalDefault({ embed: true }),
@@ -22,8 +22,11 @@ async function startApolloServer(typeDefs: string, resolvers: any) {
 
   await server.start();
   const app = new Koa();
+  // app.use(async (ctx) => {
+  //   console.log(ctx);
+  // });
   server.applyMiddleware({ app });
-  httpServer.on("request", app.callback());
+  httpServer.on('request', app.callback());
   await new Promise<void>((resolve) =>
     httpServer.listen({ port: 4000 }, resolve)
   );

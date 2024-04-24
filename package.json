@@ -17,9 +17,11 @@
     "apollo-server-core": "^3.13.0",
     "apollo-server-koa": "^3.13.0",
     "graphql": "^16.8.1",
-    "koa": "^2.14.2"
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.4.1"
   },
   "devDependencies": {
+    "@types/koa-bodyparser": "^4.3.12",
     "@types/node": "^20.10.3",
     "nodemon": "^3.0.2",
     "ts-node": "^10.9.1",

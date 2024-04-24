@@ -6,7 +6,7 @@ export const typeDefs = `
   }
   type Query {
     books: [Book]
-    getBookByTitle(title: String): Book
+    getBookByTitle(title: String): [Book]
   }
   type Location {
     name: String

@@ -7,6 +7,7 @@ import Koa from 'koa';
 import http from 'http';
 import { typeDefs } from './graphql/typeDefs';
 import resolvers from './graphql/resolvers';
+import bodyParser from 'koa-bodyparser';
 async function startApolloServer(typeDefs: string, resolvers: any) {
   const httpServer = http.createServer();
   const server = new ApolloServer({
@@ -22,9 +23,12 @@ async function startApolloServer(typeDefs: string, resolvers: any) {
 
   await server.start();
   const app = new Koa();
-  // app.use(async (ctx) => {
-  //   console.log(ctx);
-  // });
+  app.use(bodyParser());
+  app.use(async (ctx, next) => {
+    let postData = ctx.request.body;
+    console.log('postdata', postData);
+    await next();
+  });
   server.applyMiddleware({ app });
   httpServer.on('request', app.callback());
   await new Promise<void>((resolve) =>
